@@ -1,0 +1,40 @@
+<div id="details">
+  <h2>{{movie.name}}</h2>
+  <img src="images/movies/{{movie.id}}.jpg" height="270">
+  <a *ngIf ="movie && movie.trailerURL" href="{{movie.trailerURL}}" target="_blank" class="slate_button prevent-ad-overlay video-modal" data-type="recommends" data-tconst="tt6911608" data-video="vi2789914649" data-context="imdb" data-refsuffix="tt_ov_vi" data-pixels="">
+     <img alt="Trailer" title="Trailer" src="images/movies/trailers/{{movie.id}}.jpg">
+    <div class="slate_fade_top"></div>
+    <div class="slate_fade_bottom"></div>
+  </a>
+  <h4>{{movie.description}}</h4>
+  <h4>Director: {{movie.director}}</h4>
+  <h4>Duration(In minutes): {{movie.duration}}</h4>
+</div>
+<div id="theaters" style="width: 70%; align-content: center; margin-left: auto; margin-right: auto; margin-top: 15px">
+  <h2 style ="text-align: center; margin-bottom: 25px; margin-top: 25px;">Available Theaters</h2>
+  <form novalidate #myForm="ngForm">
+    <kendo-grid [kendoGridBinding]="shows"
+                [sortable]="true" pageSize="5" pageable="true"
+                (save)="saveHandler($event)" [navigable]="true"
+                (dataStateChange)="onStateChange($event)">
+      <kendo-grid-column field="theaterId" title="Theater #"></kendo-grid-column>
+      <kendo-grid-column title="Date">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          {{dataItem.movieStartDate | date: 'dd/MM/yyyy HH:mm'}}
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column title="Total Seats">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          {{dataItem.theater.rows * dataItem.theater.columns}}
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column title="View">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <a [routerLink]="['/theater-seats',dataItem.id]" class="k-button">
+            Order Tickets
+          </a>
+        </ng-template>
+      </kendo-grid-column>
+    </kendo-grid>
+  </form>
+</div>

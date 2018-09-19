@@ -1,0 +1,15 @@
+
+<div class="login-card">
+  <h1>Log-in</h1><br>
+  <!--<a [routerLink]='["/login"]'></a>-->
+  <form (ngSubmit)="onSubmit()">
+    <input type="text" [(ngModel)]="username" name="user" placeholder="Username">
+    <input type="password" [(ngModel)]="password" name="password" placeholder="Password">
+    <input type="checkbox" [(ngModel)]="rememberMe" name="rememberMe"> Remember Me
+    <div id="submitLoginForm">
+      <button type="submit" class="btn btn-success">Log In</button>
+      <button type="submit" class="btn" id="register">Register</button>
+      <a id="guest" routerLink="/{{returnUrl}}">Continue as a guest</a>
+    </div>
+  </form>
+</div>

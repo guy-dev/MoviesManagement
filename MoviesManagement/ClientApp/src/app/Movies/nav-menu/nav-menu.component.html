@@ -1,0 +1,33 @@
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+          <a [routerLink]='["/"]'>
+            Home
+          </a>
+        </li>
+        <li>
+          <a *ngIf ="auth.isAuthenticated() && userService.isAdmin()" [routerLink]='["/admin"]' style ="color: yellow;">
+            Admin
+          </a>
+        </li>
+      </ul>
+      <ul *ngIf = "!auth.isAuthenticated()" class="nav navbar-nav navbar-right">
+        <li><a [routerLink]="['/register']">Register</a></li>
+        <li><a [routerLink]="" (click) = "onLogin()">Login</a></li>
+      </ul>
+      <ul *ngIf="auth.isAuthenticated()" class="nav navbar-nav navbar-right">
+        <li><a [routerLink]="['/settings']">{{auth.getUser()}}</a></li>
+        <li><a [routerLink]="['']" (click) ="logoutUser()">Logout</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>

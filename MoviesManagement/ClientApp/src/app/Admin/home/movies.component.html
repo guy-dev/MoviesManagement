@@ -1,0 +1,95 @@
+<h1>Manage Movies</h1>
+
+<p *ngIf="!movies"><em>Loading...</em></p>
+<form novalidate #myForm="ngForm">
+  <kendo-grid [kendoGridBinding]="movies"
+              [sortable]="true" 
+              (edit)="editHandler($event)" (cancel)="cancelHandler($event)"
+              (save)="saveHandler($event)" (remove)="removeHandler($event)"
+              (add)="addHandler($event, myForm)">
+    <ng-template kendoGridToolbarTemplate>
+      <button kendoGridAddCommand type="button">Add new</button>
+    </ng-template>
+    <kendo-grid-column field="id" title="Id"></kendo-grid-column>
+      <kendo-grid-column field="name" title="Name">
+        <ng-template kendoGridEditTemplate let-dataItem="dataItem">
+          <input [(ngModel)]="dataItem.name"
+                 kendoGridFocusable
+                 name="name"
+                 required
+                 min="0"
+                 max="99"
+                 class="k-textbox"
+                 type="text" />
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column field="duration" title="Duration in minutes">
+        <ng-template kendoGridEditTemplate let-dataItem="dataItem">
+          <input [(ngModel)]="dataItem.duration"
+                 kendoGridFocusable
+                 name="duration"
+                 required
+                 min="0"
+                 max="99"
+                 class="k-textbox"
+                 type="number" />
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column field="director" title="Director">
+        <ng-template kendoGridEditTemplate let-dataItem="dataItem">
+          <input [(ngModel)]="dataItem.director"
+                 kendoGridFocusable
+                 name="director"
+                 required
+                 min="0"
+                 max="99"
+                 class="k-textbox"
+                 type="text" />
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column field="description" title="Description" width="400">
+        <ng-template kendoGridEditTemplate let-dataItem="dataItem">
+          <input [(ngModel)]="dataItem.description"
+                 kendoGridFocusable
+                 name="description"
+                 required
+                 min="0"
+                 max="99"
+                 class="k-textbox"
+                 type="text" />
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column title="Image" width="120">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <img src="images/movies/{{dataItem.id}}.jpg" height="100px" />
+        </ng-template>
+        <ng-template kendoGridEditTemplate let-dataItem="dataItem">
+          <kendo-upload  [saveUrl]="uploadSaveUrl" [saveField] ="dataItem.id" (upload)="uploadEventHandler($event)">
+          <kendo-upload-messages id ="image" name ="image" #image
+                                 select="Upload">
+          </kendo-upload-messages>
+          </kendo-upload>
+          
+          <!--<input [(ngModel)]="dataItem.description"
+                 kendoGridFocusable
+                 name="description"
+                 required
+                 min="0"
+                 max="99"
+                 class="k-textbox"
+                 type="text"/>-->
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-command-column title="command" width="220">
+        <ng-template kendoGridCellTemplate let-isNew="isNew">
+          <button kendoGridEditCommand type="button" [primary]="true">Edit</button>
+          <button kendoGridRemoveCommand type="button">Remove</button>
+          <button kendoGridSaveCommand type="button"
+                  [disabled]="!fileUploaded && (myForm.invalid || myForm.pristine)">
+            {{ isNew ? 'Add' : 'Update' }}
+          </button>
+          <button kendoGridCancelCommand type="button">{{ isNew ? 'Discard changes' : 'Cancel' }}</button>
+        </ng-template>
+      </kendo-grid-command-column>
+  </kendo-grid>
+</form>

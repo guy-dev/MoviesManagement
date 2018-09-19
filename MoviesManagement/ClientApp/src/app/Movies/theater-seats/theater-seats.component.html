@@ -1,0 +1,37 @@
+<!--<div style="border: 1px solid red">theaterSeats Component</div>
+<input [(ngModel)]="username"/>
+<input [(ngModel)]="message"/>
+<button kendoButton (click) ="send();">click here!</button>-->
+
+<div *ngIf ="sessionExpired" class="alert alert-danger" style ="text-align: center">
+  Your session has expired. Relog is neccessery,you will be redirected shortly.
+</div>
+<div class="wrapper">
+  <div class="container">
+    <h1 style="text-align: center;margin-bottom: 50px">Select Theater Seats</h1>
+    <div style="display: inline; margin-top: 20px; float: left; margin-right: 50px;height: 300px"> <kendo-chat
+                                                                                         [messages]="feed | async"
+                                                                                         [user]="mainUser"
+                                                                                        (sendMessage)="sendMessage($event)"
+                                                                                       >
+      </kendo-chat>
+    </div>
+    <div id="seat-map" style="">
+      <div class="front-indicator">Front</div>
+    </div>
+    <div id="legend" style="float: left; display: inline; position: relative; margin-top: 50px;margin-left: 15px"></div>
+    <div class="booking-details" style="display: inline;margin-top: 20px">
+      <h2>Booking Details</h2>
+      <h3> Selected Seats (<span id="counter">0</span>):</h3>
+      <ul id="selected-seats"></ul>
+      Total: <b>$<span id="total">0</span></b>
+      <button kendoButton class="checkout-button" (click)="OnCheckout()">Checkout &raquo;</button>
+    </div>
+  </div>
+</div>
+<div class="container">
+  <label id="dodo">{{seatNumber}}</label>
+
+
+</div>
+

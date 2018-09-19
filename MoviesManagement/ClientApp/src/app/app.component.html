@@ -1,0 +1,12 @@
+<div class='container-fluid'>
+  <div *ngIf="isAdmin()" class='col-sm-3'>
+    <app-admin-nav-menu></app-admin-nav-menu>
+  </div>
+  <div *ngIf="!isAdmin()">
+    <app-nav-menu></app-nav-menu>
+  </div>
+  <div [ngClass]= "isAdmin() ? 'body-content-admin col-sm-9' : 'body-content'" >
+    <router-outlet></router-outlet>
+  </div>
+</div>
+<!--"{'body-content-admin' : isAdmin(),'body-content' : !isAdmin(), 'col-sm-9' : true}"-->

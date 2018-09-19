@@ -1,0 +1,40 @@
+<span id ="popularMoviesTitle">
+  <h3>Most Popular Movies</h3>
+</span>
+<table id="popularMoviesTable">
+  <tr>
+    <td *ngFor="let popularMovie of popularMovies"><a [routerLink]="['/theater',popularMovie.id]"><img src="images/movies/{{popularMovie.id}}.jpg" height="140" /></a></td>
+  </tr>
+</table>
+<div id ="searchMovie">
+  Search Movie:
+  <kendo-combobox [textField]="'name'"
+                  [valueField]="'id'" [filterable]="true"
+                  [data]="gridMovies" [allowCustom]="allowCustom" placeholder ="Movie Name"  (selectionChange)="movieNameSelectionChange($event)" (filterChange)="filterChange($event)">
+  </kendo-combobox>
+</div>
+<div id="moviesList" style="width: 70%; align-content: center;margin-left:auto; margin-right:auto;margin-top: 15px">
+  <form novalidate #myForm="ngForm">
+    <kendo-grid [kendoGridBinding]="gridMovies"
+                [sortable]="true" pageSize="5" pageable="true"
+                (save)="saveHandler($event)" [navigable]="true"
+                (dataStateChange)="onStateChange($event)">
+      <kendo-grid-column field="name" title="Name"></kendo-grid-column>
+      <kendo-grid-column field="duration" title="Duration in minutes"></kendo-grid-column>
+      <kendo-grid-column field="director" title="Director"> </kendo-grid-column>
+      <kendo-grid-column field="description" title="Description" width ="400"></kendo-grid-column>
+      <kendo-grid-column title="Image" width="120">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <img src="images/movies/{{dataItem.id}}.jpg" height="100px" />
+        </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-command-column title="View">
+        <ng-template kendoGridCellTemplate let-dataItem>        
+          <a [routerLink]="['/theater',dataItem.id]" class ="k-button">
+            Available Theaters
+            </a>
+        </ng-template>
+      </kendo-grid-command-column>
+    </kendo-grid>
+  </form>
+</div>
